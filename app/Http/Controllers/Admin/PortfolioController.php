@@ -63,12 +63,16 @@ class PortfolioController extends Controller
             $form_data['image']=$path;
         }
         
-        if($request->has('technologies')){
-            $project->technologies()->attach($request->technologies);
-        }
+        // if($request->has('technologies')){
+        //     $project->technologies()->attach($request->technologies);
+        // }
 
         $project->fill($form_data);
         $project->save();
+
+        if($request->has('technologies')){
+            $project->technologies()->sync($request->technologies);
+        }
         return redirect()->route('admin.works.index');
 
     }
@@ -119,17 +123,11 @@ class PortfolioController extends Controller
             $form_data['image']=$path;
         }
 
-        if($request->has('technologies')){
-            $project->technologies()->attach($request->technologies);
-        }
-
-        if($request->has('technologies')){
-            $project->technologies()->dettach();
-        }
-
-
-
         $project->update($form_data);
+        
+        if($request->has('technologies')){
+            $project->technologies()->sync($request->technologies);
+        }
         return redirect()->route('admin.works.show', $project->id);
     }
 
@@ -144,6 +142,10 @@ class PortfolioController extends Controller
         $project = Portfolio::findOrFail($id);
 
         $project->delete();
+        //Metodo er cancellare immagini
+        $project->technologies()->detach();
         return redirect()->route('admin.works.index');
+
+
     }
 }

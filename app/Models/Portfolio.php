@@ -12,7 +12,7 @@ use App\Models\Technology;
 class Portfolio extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'image', 'link','description','back_ender', 'front_ender','ux','ui','illustrator','type_id','tech_id'];
+    protected $fillable = ['title', 'image', 'link','description','back_ender', 'front_ender','ux','ui','illustrator','type_id','technology_id'];
 
     public function type(){
         return $this->belongsTo(Types::class);
