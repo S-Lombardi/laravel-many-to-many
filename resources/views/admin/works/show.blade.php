@@ -40,7 +40,10 @@
                 <div>Illustratore: {{$project->illustrator}}</div>
 
                 
-                {{-- CATEGORIA / SELECT --}}
+                {{-- TECNOLOGIE--}}
+
+                
+
                 
                     
 
