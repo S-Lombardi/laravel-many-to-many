@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Technology extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['tech_name'];
+    
+    public function portfolios(){
+        return $this->belongsToMany(Portfolio::class);
+    }
 }
