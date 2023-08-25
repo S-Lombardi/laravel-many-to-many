@@ -41,7 +41,18 @@
 
                 
                 {{-- TECNOLOGIE--}}
+                <div class=col-12>
+                    <strong>Tecnologie utilizzate:</strong>
+                    @if($project->technologies)
+                        @foreach($project->technologies as $tech)
+                            <div class="badge text-bg-primary" href="">
+                                {{$tech->tech_name}}
+                            </div>
+                        @endforeach
 
+                    @endif
+
+                </div>
                 
 
                 
