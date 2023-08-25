@@ -23,6 +23,11 @@ class TechnologySeeder extends Seeder
 
             $new_tech = new Technology();
             $new_tech->tech_name = $tech;
+
+            $new_tech->save();
         }
+
+        
+
     }
 }
