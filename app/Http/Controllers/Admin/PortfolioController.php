@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Types;
 
+use App\Models\Types;
+use App\Models\Technology;
 use App\Models\Portfolio;
+
 use App\Http\Requests\StorePortfolioRequest;
 use App\Http\Requests\UpdatePortfolioRequest;
 
@@ -36,9 +38,10 @@ class PortfolioController extends Controller
     //FFORM
     public function create()
     {
-        //Recupero tutti i dati dalla tabella types
+        //Recupero tutti i dati dal db
         $types=Types::all();
-        return view('admin.works.create', compact('types'));
+        $technologies=Technology::all();
+        return view('admin.works.create', compact('types', 'technologies'));
     }
 
     /**
@@ -60,11 +63,15 @@ class PortfolioController extends Controller
             $form_data['image']=$path;
         }
         
+        if($request->has('technologies')){
+            $project->technologies()->attach($request->technologies);
+        }
+
         $project->fill($form_data);
         $project->save();
         return redirect()->route('admin.works.index');
-    }
 
+    }
     /**
      * Display the specified resource.
      *
@@ -88,8 +95,9 @@ class PortfolioController extends Controller
         //Recupero tutti i dati 
         $project = Portfolio::findOrFail($id);
         $types=Types::all();
+        $technologies=Technology::all();
 
-        return view('admin.works.edit', compact ('project', 'types'));
+        return view('admin.works.edit', compact ('project', 'types','technologies'));
     }
 
     /**
@@ -110,6 +118,16 @@ class PortfolioController extends Controller
 
             $form_data['image']=$path;
         }
+
+        if($request->has('technologies')){
+            $project->technologies()->attach($request->technologies);
+        }
+
+        if($request->has('technologies')){
+            $project->technologies()->dettach();
+        }
+
+
 
         $project->update($form_data);
         return redirect()->route('admin.works.show', $project->id);
